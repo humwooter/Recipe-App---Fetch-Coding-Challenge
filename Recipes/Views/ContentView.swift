@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var searchModel = SearchModel()
+    
     var body: some View {
         MealListView()
+            .environmentObject(searchModel)
+            .searchable(text: $searchModel.searchText)
     }
 }
 
