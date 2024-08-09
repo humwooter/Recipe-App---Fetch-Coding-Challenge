@@ -10,15 +10,22 @@ import Foundation
 @MainActor
 class MealDetailViewModel: ObservableObject {
     @Published var mealDetail: MealDetail?
-    @Published var errorMessage: String?
+    @Published var isLoading = false
+       @Published var showingError = false
+       @Published var errorMessage: String?
+    
     
     func fetchMealDetail(id: String) {
-        Task {
-            do {
-                mealDetail = try await APIService.shared.fetchMealDetail(id: id)
-            } catch {
-                errorMessage = error.localizedDescription
+            isLoading = true
+            showingError = false
+            Task {
+                do {
+                    mealDetail = try await APIService.shared.fetchMealDetail(id: id)
+                } catch {
+                    showingError = true
+                    errorMessage = error.localizedDescription
+                }
+                isLoading = false
             }
         }
-    }
 }

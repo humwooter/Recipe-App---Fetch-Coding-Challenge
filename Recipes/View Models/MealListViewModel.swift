@@ -15,15 +15,18 @@ class MealListViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     @Published var isLoading = false
+    @Published var showingError = false
 
     
     func fetchMeals() {
+        isLoading = true
+        showingError = false
         Task {
-            isLoading = true
             do {
                 meals = try await APIService.shared.fetchMeals()
             } catch {
                 errorMessage = error.localizedDescription
+                showingError = true
             }
             isLoading = false
         }
