@@ -26,7 +26,7 @@ struct MealListView: View {
                         VStack {
                             Text("No desserts available")
                                 .foregroundColor(.secondary)
-                            Text("Pull to refresh")
+                            Text("Please check your connection and try again.")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
