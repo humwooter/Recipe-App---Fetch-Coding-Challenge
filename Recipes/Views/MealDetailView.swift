@@ -16,21 +16,31 @@ struct MealDetailView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 10) {
                 if let meal = viewModel.mealDetail {
-                    Text(meal.name).font(.title)
-                    VStack {
-                        Text("Instructions:").font(.headline)
+                    Text(meal.name)
+                        .font(.title)
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Ingredients:")
+                            .font(.headline)
+                        ForEach(Array(zip(meal.ingredients.indices, zip(meal.ingredients, meal.measurements))), id: \.0) { index, pair in
+                            let (ingredient, measurement) = pair
+                            Text("\(index + 1). \(ingredient): \(measurement)")
+                        }
+                    }
+                    .padding()
+                    .background(getBackgroundColor())
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Instructions:")
+                            .font(.headline)
                         Text(meal.instructions)
                     }
-                        .padding()
-                        .background(getBackgroundColor()).clipShape(RoundedRectangle(cornerRadius: 10))
-                    VStack {
-                        Text("Ingredients:").font(.headline)
-                        ForEach(Array(zip(meal.ingredients, meal.measurements)), id: \.0) { ingredient, measurement in
-                            Text("\(ingredient): \(measurement)")
-                        }
-                    }.frame(maxWidth: .infinity)
                     .padding()
-                    .background(getBackgroundColor()).clipShape(RoundedRectangle(cornerRadius: 10))
+                    .background(getBackgroundColor())
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+
+             
                 } else {
                     ProgressView()
                 }
@@ -45,9 +55,9 @@ struct MealDetailView: View {
             Text(viewModel.errorMessage ?? "")
         }
     }
-    
+
     func getBackgroundColor() -> Color {
-        return .brown.opacity(0.3)
+            return Color(UIColor.secondarySystemBackground)
     }
-    
 }
+
