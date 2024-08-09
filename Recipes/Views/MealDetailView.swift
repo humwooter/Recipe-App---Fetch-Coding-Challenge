@@ -27,10 +27,20 @@ struct MealDetailView: View {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Ingredients:")
                             .font(.headline)
-                        ForEach(Array(zip(meal.ingredients.indices, zip(meal.ingredients, meal.measurements))), id: \.0) { index, pair in
-                            let (ingredient, measurement) = pair
-                            Text("\(index + 1). \(ingredient): \(measurement)")
-                        }
+                        
+                        let ingredientsText = meal.ingredients.enumerated().map { index, ingredient in
+                            "\(index + 1). \(ingredient): \(meal.measurements[index])"
+                        }.joined(separator: "\n")
+                        
+                        Text(ingredientsText)
+                            .contextMenu {
+                                Button(action: {
+                                    UIPasteboard.general.string = ingredientsText
+                                }) {
+                                    Text("Copy Ingredients")
+                                    Image(systemName: "doc.on.clipboard")
+                                }
+                            }
                     }
                     .padding()
                     .background(getBackgroundColor())
@@ -40,14 +50,22 @@ struct MealDetailView: View {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Instructions:")
                             .font(.headline)
+                        
                         Text(meal.instructions)
+                            .contextMenu {
+                                Button(action: {
+                                    UIPasteboard.general.string = meal.instructions
+                                }) {
+                                    Text("Copy Instructions")
+                                    Image(systemName: "doc.on.clipboard")
+                                }
+                            }
                     }
                     .padding()
                     .background(getBackgroundColor())
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                     .padding(.horizontal)
 
-             
                 } else {
                     ProgressView()
                 }
@@ -68,7 +86,6 @@ struct MealDetailView: View {
     }
 
     func getBackgroundColor() -> Color {
-            return Color(UIColor.secondarySystemBackground)
+        return Color(UIColor.secondarySystemBackground)
     }
 }
-
