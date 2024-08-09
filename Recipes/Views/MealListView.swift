@@ -8,28 +8,63 @@
 import Foundation
 import SwiftUI
 
+
 struct MealListView: View {
     @StateObject private var viewModel = MealListViewModel()
     @EnvironmentObject var searchModel: SearchModel
     @Environment(\.isSearching) private var isSearching
+    
+    @State private var showingError = false
+
 
     var body: some View {
-        NavigationView {
-            filteredMealsView()
-            .navigationTitle("Desserts")
-            .onAppear { viewModel.fetchMeals() }
-        }
-        .alert("Error", isPresented: Binding<Bool>(
-            get: { viewModel.errorMessage != nil },
-            set: { if !$0 { viewModel.errorMessage = nil } }
-        )) {
-            Text(viewModel.errorMessage ?? "")
-        }
-    }
+           NavigationView {
+               Group {
+                   if viewModel.meals.isEmpty {
+                       if viewModel.isLoading {
+                           ProgressView("Loading desserts...")
+                       } else {
+                           VStack {
+                               Text("No desserts available")
+                                   .foregroundColor(.secondary)
+                               Text("Pull to refresh")
+                                   .font(.caption)
+                                   .foregroundColor(.secondary)
+                           }
+                       }
+                   } else {
+                       filteredMealsView()
+                   }
+               }
+               .navigationTitle("Desserts")
+               .refreshable {
+                   await viewModel.fetchMeals()
+               }
+               .onAppear {
+                   if viewModel.meals.isEmpty {
+                       Task {
+                           await viewModel.fetchMeals()
+                       }
+                   }
+               }
+           }
+           .alert(isPresented: $showingError) {
+               Alert(
+                   title: Text("Error"),
+                   message: Text(viewModel.errorMessage ?? "An unknown error occurred"),
+                   dismissButton: .default(Text("OK"))
+               )
+           }
+       }
+    
     @ViewBuilder
     func mealListView(meals: [Meal]) -> some View {
         List(meals) { meal in
-            NavigationLink(destination: MealDetailView(mealId: meal.id)) {
+            NavigationLink {
+                VStack {
+                    MealDetailView(mealId: meal.id, mealThumbnail: meal.thumbnailURL)
+                }
+            } label: {
                 Text(meal.name)
             }.padding()
         }

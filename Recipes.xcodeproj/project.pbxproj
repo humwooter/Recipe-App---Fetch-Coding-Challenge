@@ -19,6 +19,7 @@
 		4AED6D8B2C659E89007F7298 /* MealListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AED6D8A2C659E89007F7298 /* MealListView.swift */; };
 		4AED6D8D2C659EAD007F7298 /* MealDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AED6D8C2C659EAD007F7298 /* MealDetailView.swift */; };
 		4AED6D8F2C65A197007F7298 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AED6D8E2C65A197007F7298 /* SearchModel.swift */; };
+		4AED6D932C65F46E007F7298 /* MealThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AED6D922C65F46E007F7298 /* MealThumbnailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		4AED6D8A2C659E89007F7298 /* MealListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealListView.swift; sourceTree = "<group>"; };
 		4AED6D8C2C659EAD007F7298 /* MealDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailView.swift; sourceTree = "<group>"; };
 		4AED6D8E2C65A197007F7298 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
+		4AED6D922C65F46E007F7298 /* MealThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealThumbnailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				4AED6D6F2C65993E007F7298 /* ContentView.swift */,
 				4AED6D8A2C659E89007F7298 /* MealListView.swift */,
 				4AED6D8C2C659EAD007F7298 /* MealDetailView.swift */,
+				4AED6D922C65F46E007F7298 /* MealThumbnailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -200,6 +203,7 @@
 				4AED6D842C659CDD007F7298 /* APIService.swift in Sources */,
 				4AED6D8F2C65A197007F7298 /* SearchModel.swift in Sources */,
 				4AED6D812C659CCC007F7298 /* MealDetail.swift in Sources */,
+				4AED6D932C65F46E007F7298 /* MealThumbnailView.swift in Sources */,
 				4AED6D8B2C659E89007F7298 /* MealListView.swift in Sources */,
 				4AED6D7F2C659CC1007F7298 /* Meal.swift in Sources */,
 				4AED6D6E2C65993E007F7298 /* RecipesApp.swift in Sources */,

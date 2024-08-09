@@ -11,6 +11,7 @@ import SwiftUI
 struct MealDetailView: View {
     @StateObject private var viewModel = MealDetailViewModel()
     let mealId: String
+    var mealThumbnail: URL?
 
     var body: some View {
         ScrollView {
@@ -19,6 +20,10 @@ struct MealDetailView: View {
                     Text(meal.name)
                         .font(.title)
                     
+                    MealThumbnailView(thumbnailURL: mealThumbnail)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .padding()
+
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Ingredients:")
                             .font(.headline)
@@ -30,6 +35,7 @@ struct MealDetailView: View {
                     .padding()
                     .background(getBackgroundColor())
                     .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .padding(.horizontal)
 
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Instructions:")
@@ -39,6 +45,7 @@ struct MealDetailView: View {
                     .padding()
                     .background(getBackgroundColor())
                     .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .padding(.horizontal)
 
              
                 } else {
@@ -49,11 +56,15 @@ struct MealDetailView: View {
         }
         .onAppear { viewModel.fetchMealDetail(id: mealId) }
         .alert("Error", isPresented: Binding<Bool>(
-            get: { viewModel.errorMessage != nil },
-            set: { if !$0 { viewModel.errorMessage = nil } }
-        )) {
-            Text(viewModel.errorMessage ?? "")
-        }
+                   get: { viewModel.errorMessage != nil },
+                   set: { if !$0 { viewModel.errorMessage = nil } }
+               )) {
+                   Text(viewModel.errorMessage ?? "An unknown error occurred")
+                   Button("Dismiss", role: .cancel) {
+                       viewModel.errorMessage = nil
+                   }
+               }
+        
     }
 
     func getBackgroundColor() -> Color {
